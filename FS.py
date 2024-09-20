@@ -130,4 +130,13 @@ if swapbtm:
     YourTemp = temp_file.name
 
   swapped = FaceSwap1212(SourceTemp,YourTemp, app, swapper)
-  st.image(swapped)
+  #st.image(swapped)
+  if isinstance(swapped, np.ndarray):
+    # Convert the NumPy array to a PIL image
+    swapped_image = Image.fromarray(swapped)
+    
+    # Now pass the PIL image to st.image()
+    st.image(swapped_image)
+  else:
+    # If swapped is already a valid image, just display it
+    st.image(swapped)
