@@ -72,8 +72,8 @@ if swapbtm:
   app.prepare(ctx_id=0, det_size=(640, 640))
   print("Face Detection Model Loaded...")
 
-  swapper = insightface.model_zoo.get_model("/content/drive/MyDrive/InsightFace/inswapper_128.onnx",
-                                          download=False,
+  swapper = insightface.model_zoo.get_model("https://drive.google.com/uc?export=download&id=1upxbEI3HnC0Q8gmekI1ng69MVg7ljZQV",
+                                          download=True,
                                           download_zip=False)
   print("Face Swapper Moel Loaded...")
   swapped = FaceSwap1212(SourceTemp,YourTemp, app, swapper)
