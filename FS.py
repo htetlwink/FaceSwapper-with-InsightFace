@@ -8,6 +8,8 @@ import tempfile
 import insightface
 from insightface.app import FaceAnalysis
 from insightface.app import ins_get_image
+import io
+from PIL import Image
 
 print("Libaries Import Successful !")
 
@@ -78,6 +80,30 @@ def FaceSwap1212(img1_fn, img2_fn, app, swapper, plot_before=True, plot_after=Tr
     plt.imshow(img2_rgb[:, :, ::-1])
     plt.axis("off")
     plt.show()
+
+    image = Image.fromarray(img1_rgb)
+    img_buffer = io.BytesIO()
+    image.save(img_buffer, format="JPEG")
+    img_bytes = img_buffer.getvalue()
+
+    st.download_button(
+    label="Download Processed Image1",
+    data=img_bytes,
+    file_name="processed_image1.jpg",  # Change file name and extension as needed
+    mime="image/jpeg"  # Change MIME type if you use a different image format
+)
+
+    image2 = Image.fromarray(img2_rgb)
+    img_buffer2 = io.BytesIO()
+    image2.save(img_buffer2, format="JPEG")
+    img_bytes2 = img_buffer2.getvalue()
+
+    st.download_button(
+    label="Download Processed Image2",
+    data=img_bytes2,
+    file_name="processed_image2.jpg",  # Change file name and extension as needed
+    mime="image/jpeg"  # Change MIME type if you use a different image format
+)
 
   return img1_rgb, img2_rgb
 
