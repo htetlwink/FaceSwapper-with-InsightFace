@@ -130,6 +130,9 @@ if swapbtm:
     YourTemp = temp_file.name
 
   swapped = FaceSwap1212(SourceTemp,YourTemp, app, swapper)
+  st.write(type(swapped))  # This will show the type of the 'swapped' variable
+  st.write(swapped)        # This will display the content of the 'swapped' variable
+
   #st.image(swapped)
   if isinstance(swapped, np.ndarray):
     # Convert the NumPy array to a PIL image
