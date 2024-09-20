@@ -18,10 +18,33 @@ app = FaceAnalysis(name='buffalo_l')
 app.prepare(ctx_id=0, det_size=(640, 640))
 print("Face Detection Model Loaded...")
 
-swapper = insightface.model_zoo.get_model("https://drive.google.com/uc?export=download&id=1upxbEI3HnC0Q8gmekI1ng69MVg7ljZQV",
-                                        download=True,
-                                        download_zip=False)
-print("Face Swapper Model Loaded...")
+import requests
+
+def download_from_dropbox(url, destination):
+    # Send a GET request to the Dropbox direct download link
+    response = requests.get(url)
+
+    # Check if the request was successful
+    if response.status_code == 200:
+        # Save the content to the destination file
+        with open(destination, 'wb') as file:
+            file.write(response.content)
+        print(f"Model downloaded successfully: {destination}")
+    else:
+        print(f"Failed to download the model. Status code: {response.status_code}")
+
+# Dropbox direct download link
+dropbox_url = 'https://www.dropbox.com/scl/fi/d6enzmp5gtrul4ue9a3ev/inswapper_128.onnx?rlkey=3g3bqkg75xrsw47xtkhhri2ol&st=galk0wp4&dl=1'
+
+# Path to save the downloaded ONNX model
+destination = 'inswapper_128.onnx'
+
+# Call the function to download the file
+download_from_dropbox(dropbox_url, destination)
+
+swapper = insightface.model_zoo.get_model("inswapper_128.onnx",
+                                          download=False,
+                                          download_zip=False)
 
 def FaceSwap1212(img1_fn, img2_fn, app, swapper, plot_before=True, plot_after=True):
   img1 = cv2.imread(img1_fn)
