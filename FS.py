@@ -11,6 +11,18 @@ from insightface.app import ins_get_image
 
 print("Libaries Import Successful !")
 
+import onnxruntime
+#print(onnxruntime.__version__)
+
+app = FaceAnalysis(name='buffalo_l')
+app.prepare(ctx_id=0, det_size=(640, 640))
+print("Face Detection Model Loaded...")
+
+swapper = insightface.model_zoo.get_model("https://drive.google.com/uc?export=download&id=1upxbEI3HnC0Q8gmekI1ng69MVg7ljZQV",
+                                        download=True,
+                                        download_zip=False)
+print("Face Swapper Model Loaded...")
+
 def FaceSwap1212(img1_fn, img2_fn, app, swapper, plot_before=True, plot_after=True):
   img1 = cv2.imread(img1_fn)
   img2 = cv2.imread(img2_fn)
@@ -68,13 +80,5 @@ if swapbtm:
     temp_file.write(YourPhoto.read())
     YourTemp = temp_file.name
 
-  app = FaceAnalysis(name='buffalo_l')
-  app.prepare(ctx_id=0, det_size=(640, 640))
-  print("Face Detection Model Loaded...")
-
-  swapper = insightface.model_zoo.get_model("https://drive.google.com/uc?export=download&id=1upxbEI3HnC0Q8gmekI1ng69MVg7ljZQV",
-                                          download=True,
-                                          download_zip=False)
-  print("Face Swapper Moel Loaded...")
   swapped = FaceSwap1212(SourceTemp,YourTemp, app, swapper)
   st.image(swapped)
