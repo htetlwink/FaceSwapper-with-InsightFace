@@ -16,38 +16,6 @@ print("Libaries Import Successful !")
 import onnxruntime
 #print(onnxruntime.__version__)
 
-app = FaceAnalysis(name='buffalo_l')
-app.prepare(ctx_id=0, det_size=(640, 640))
-print("Face Detection Model Loaded...")
-
-import requests
-
-def download_from_dropbox(url, destination):
-    # Send a GET request to the Dropbox direct download link
-    response = requests.get(url)
-
-    # Check if the request was successful
-    if response.status_code == 200:
-        # Save the content to the destination file
-        with open(destination, 'wb') as file:
-            file.write(response.content)
-        print(f"Model downloaded successfully: {destination}")
-    else:
-        print(f"Failed to download the model. Status code: {response.status_code}")
-
-# Dropbox direct download link
-dropbox_url = 'https://www.dropbox.com/scl/fi/d6enzmp5gtrul4ue9a3ev/inswapper_128.onnx?rlkey=3g3bqkg75xrsw47xtkhhri2ol&st=galk0wp4&dl=1'
-
-# Path to save the downloaded ONNX model
-destination = 'inswapper_128.onnx'
-
-# Call the function to download the file
-download_from_dropbox(dropbox_url, destination)
-
-swapper = insightface.model_zoo.get_model("inswapper_128.onnx",
-                                          download=False,
-                                          download_zip=False)
-
 def FaceSwap1212(img1_fn, img2_fn, app, swapper, plot_before=True, plot_after=True):
   img1 = cv2.imread(img1_fn)
   img2 = cv2.imread(img2_fn)
@@ -128,6 +96,40 @@ if swapbtm:
   with tempfile.NamedTemporaryFile(delete=False) as temp_file:
     temp_file.write(YourPhoto.read())
     YourTemp = temp_file.name
+
+  
+  app = FaceAnalysis(name='buffalo_l')
+  app.prepare(ctx_id=0, det_size=(640, 640))
+  print("Face Detection Model Loaded...")
+
+  import requests
+
+  def download_from_dropbox(url, destination):
+      # Send a GET request to the Dropbox direct download link
+      response = requests.get(url)
+
+      # Check if the request was successful
+      if response.status_code == 200:
+          # Save the content to the destination file
+          with open(destination, 'wb') as file:
+              file.write(response.content)
+          print(f"Model downloaded successfully: {destination}")
+      else:
+          print(f"Failed to download the model. Status code: {response.status_code}")
+
+  # Dropbox direct download link
+  dropbox_url = 'https://www.dropbox.com/scl/fi/d6enzmp5gtrul4ue9a3ev/inswapper_128.onnx?rlkey=3g3bqkg75xrsw47xtkhhri2ol&st=galk0wp4&dl=1'
+
+  # Path to save the downloaded ONNX model
+  destination = 'inswapper_128.onnx'
+
+  # Call the function to download the file
+  download_from_dropbox(dropbox_url, destination)
+
+  swapper = insightface.model_zoo.get_model("inswapper_128.onnx",
+                                            download=False,
+                                            download_zip=False)
+
 
   swapped = FaceSwap1212(SourceTemp,YourTemp, app, swapper)
   st.write(type(swapped))  # This will show the type of the 'swapped' variable
