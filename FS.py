@@ -16,15 +16,6 @@ print("Libaries Import Successful !")
 import onnxruntime
 #print(onnxruntime.__version__)
 
-
-app = FaceAnalysis(name='buffalo_l')
-app.prepare(ctx_id=0, det_size=(640, 640))
-print("Face Detection Model Loaded...")
-
-swapper = insightface.model_zoo.get_model("inswapper_128.onnx",
-                                            download=False,
-                                            download_zip=False)
-
 def FaceSwap1212(img1_fn, img2_fn, app, swapper, plot_before=True, plot_after=True):
   img1 = cv2.imread(img1_fn)
   img2 = cv2.imread(img2_fn)
@@ -93,19 +84,28 @@ st.markdown("<h5 style='text-align: center;'>Upload Your Photo</h5>", unsafe_all
 YourPhoto = st.file_uploader("Upload Your Photo", type=["jpg","png","jpeg"])
 st.markdown("---")
 
-swapbtm = st.button("Swap Faces")
+if SourcePhoto and YourPhoto is None:
+  swapbtm = st.button("Swap Faces")
 
-if swapbtm:
+  if swapbtm:
 
-  with tempfile.NamedTemporaryFile(delete=False) as temp_file:
-    temp_file.write(SourcePhoto.read())
-    SourceTemp = temp_file.name
+    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+      temp_file.write(SourcePhoto.read())
+      SourceTemp = temp_file.name
 
-  with tempfile.NamedTemporaryFile(delete=False) as temp_file:
-    temp_file.write(YourPhoto.read())
-    YourTemp = temp_file.name
+    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+      temp_file.write(YourPhoto.read())
+      YourTemp = temp_file.name
+  
+    app = FaceAnalysis(name='buffalo_l')
+    app.prepare(ctx_id=0, det_size=(640, 640))
+    print("Face Detection Model Loaded...")
 
-  swappedp1, swappedp2 = FaceSwap1212(SourceTemp,YourTemp, app, swapper)
-  #swapped = Image.fromarray(swapped)
-  st.image(swappedp1)
-  st.image(swappedp2)
+    swapper = insightface.model_zoo.get_model("inswapper_128.onnx",
+                                                download=False,
+                                                download_zip=False)
+
+
+    swappedp1, swappedp2 = FaceSwap1212(SourceTemp,YourTemp, app, swapper)
+    st.image(swappedp1)
+    st.image(swappedp2)
