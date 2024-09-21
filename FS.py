@@ -107,5 +107,6 @@ if swapbtm:
                                             download_zip=False)
 
   swapped = FaceSwap1212(SourceTemp,YourTemp, app, swapper)
-  st.write(type(swapped))  # This will show the type of the 'swapped' variable
-  st.write(swapped)        # This will display the content of the 'swapped' variable
+  #st.write(type(swapped))  # This will show the type of the 'swapped' variable
+  #st.write(swapped)        # This will display the content of the 'swapped' variable
+  st.image(swapped)
