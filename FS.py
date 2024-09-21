@@ -16,6 +16,15 @@ print("Libaries Import Successful !")
 import onnxruntime
 #print(onnxruntime.__version__)
 
+
+app = FaceAnalysis(name='buffalo_l')
+app.prepare(ctx_id=0, det_size=(640, 640))
+print("Face Detection Model Loaded...")
+
+swapper = insightface.model_zoo.get_model("inswapper_128.onnx",
+                                            download=False,
+                                            download_zip=False)
+
 def FaceSwap1212(img1_fn, img2_fn, app, swapper, plot_before=True, plot_after=True):
   img1 = cv2.imread(img1_fn)
   img2 = cv2.imread(img2_fn)
@@ -72,7 +81,6 @@ def FaceSwap1212(img1_fn, img2_fn, app, swapper, plot_before=True, plot_after=Tr
     file_name="processed_image2.jpg",  # Change file name and extension as needed
     mime="image/jpeg"  # Change MIME type if you use a different image format
 )
-
   return img1_rgb, img2_rgb
 
 st.set_page_config(page_title="FaceSwapper",page_icon="💋")
@@ -97,16 +105,5 @@ if swapbtm:
     temp_file.write(YourPhoto.read())
     YourTemp = temp_file.name
 
-  
-  app = FaceAnalysis(name='buffalo_l')
-  app.prepare(ctx_id=0, det_size=(640, 640))
-  print("Face Detection Model Loaded...")
-
-  swapper = insightface.model_zoo.get_model("inswapper_128.onnx",
-                                            download=False,
-                                            download_zip=False)
-
   swapped = FaceSwap1212(SourceTemp,YourTemp, app, swapper)
-  #st.write(type(swapped))  # This will show the type of the 'swapped' variable
-  #st.write(swapped)        # This will display the content of the 'swapped' variable
   st.image(swapped)
