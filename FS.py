@@ -105,6 +105,7 @@ if swapbtm:
     temp_file.write(YourPhoto.read())
     YourTemp = temp_file.name
 
-  swapped = FaceSwap1212(SourceTemp,YourTemp, app, swapper)
-  swapped = Image.fromarray(swapped)
-  st.image(swapped)
+  swappedp1, swappedp2 = FaceSwap1212(SourceTemp,YourTemp, app, swapper)
+  #swapped = Image.fromarray(swapped)
+  st.image(swappedp1)
+  st.image(swappedp2)
