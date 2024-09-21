@@ -84,7 +84,7 @@ st.markdown("<h5 style='text-align: center;'>Upload Your Photo</h5>", unsafe_all
 YourPhoto = st.file_uploader("Upload Your Photo", type=["jpg","png","jpeg"])
 st.markdown("---")
 
-if SourcePhoto and YourPhoto is None:
+if SourcePhoto and YourPhoto is not None:
   swapbtm = st.button("Swap Faces")
 
   if swapbtm:
