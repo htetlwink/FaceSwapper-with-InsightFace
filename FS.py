@@ -106,4 +106,5 @@ if swapbtm:
     YourTemp = temp_file.name
 
   swapped = FaceSwap1212(SourceTemp,YourTemp, app, swapper)
+  swapped = Image.fromarray(swapped)
   st.image(swapped)
