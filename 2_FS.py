@@ -56,15 +56,19 @@ if SourcePhoto is not None and YourPhoto is not None:
         st.session_state.num_faces = len(st.session_state.faces)
 
         # Display detected faces
-        fig, axs = plt.subplots(1, st.session_state.num_faces, figsize=(12, 5))
-        for i, face in enumerate(st.session_state.faces):
-            bbox = face["bbox"].astype(int)
-            cv2.rectangle(img, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2)
-            axs[i].imshow(img[bbox[1]:bbox[3], bbox[0]:bbox[2], ::-1])
-            axs[i].axis("off")
-            axs[i].set_title(f"Face {i+1}")
+        if st.session_state.num_faces > 0:
+            fig, axs = plt.subplots(1, st.session_state.num_faces, figsize=(12, 5))
+            if st.session_state.num_faces == 1:
+                axs = [axs]  # Convert single Axes to list
 
-        st.pyplot(fig)
+            for i, face in enumerate(st.session_state.faces):
+                bbox = face["bbox"].astype(int)
+                cv2.rectangle(img, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2)
+                axs[i].imshow(img[bbox[1]:bbox[3], bbox[0]:bbox[2], ::-1])
+                axs[i].axis("off")
+                axs[i].set_title(f"Face {i+1}")
+
+            st.pyplot(fig)
 
         # Detect faces in Your Photo
         simg = cv2.imread(YourTemp)
@@ -72,15 +76,20 @@ if SourcePhoto is not None and YourPhoto is not None:
         st.session_state.num_sfaces = len(st.session_state.sfaces)
 
         # Display detected faces
-        fig, axs = plt.subplots(1, st.session_state.num_sfaces, figsize=(12, 5))
-        for i, face in enumerate(st.session_state.sfaces):
-            bbox = face["bbox"].astype(int)
-            cv2.rectangle(simg, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2)
-            axs[i].imshow(simg[bbox[1]:bbox[3], bbox[0]:bbox[2], ::-1])
-            axs[i].axis("off")
-            axs[i].set_title(f"Face {i+1}")
+        if st.session_state.num_sfaces > 0:
+            fig, axs = plt.subplots(1, st.session_state.num_sfaces, figsize=(12, 5))
+            if st.session_state.num_sfaces == 1:
+                axs = [axs]  # Convert to a list for consistency
 
-        st.pyplot(fig)
+            for i, face in enumerate(st.session_state.sfaces):
+                bbox = face["bbox"].astype(int)
+                cv2.rectangle(simg, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2)
+                axs[i].imshow(simg[bbox[1]:bbox[3], bbox[0]:bbox[2], ::-1])
+                axs[i].axis("off")
+                axs[i].set_title(f"Face {i+1}")
+
+            st.pyplot(fig)
+
 
         st.session_state.faces_detected = True  # Mark faces as detected
 
