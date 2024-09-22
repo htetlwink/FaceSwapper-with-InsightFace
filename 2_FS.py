@@ -37,23 +37,23 @@ with col2:
 if SourcePhoto is not None and YourPhoto is not None:
   detectBtm = st.button("Detect Faces")
 
+  with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+    temp_file.write(SourcePhoto.read())
+    SourceTemp = temp_file.name
+
+  with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+    temp_file.write(YourPhoto.read())
+    YourTemp = temp_file.name
+
   if detectBtm:
-
-    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
-      temp_file.write(SourcePhoto.read())
-      SourceTemp = temp_file.name
-
-    with tempfile.NamedTemporaryFile(delete=False) as temp_file:
-      temp_file.write(YourPhoto.read())
-      YourTemp = temp_file.name
-        
+            
     app = FaceAnalysis(name='buffalo_l')
     app.prepare(ctx_id=0, det_size=(640, 640))
     print("Face Detection Model Loaded...")
 
     with col1:
       #For First Photo
-      img = cv2.imread(SourcePhoto)
+      img = cv2.imread(SourceTemp)
       faces = app.get(img)
       num_faces = len(faces)
       print(num_faces)
@@ -82,7 +82,7 @@ if SourcePhoto is not None and YourPhoto is not None:
 
     with col2:
       #For Second Photo
-      simg = cv2.imread(YourPhoto)
+      simg = cv2.imread(YourTemp)
       sfaces = app.get(simg)
       num_sfaces = len(sfaces)
 
