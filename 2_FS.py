@@ -101,9 +101,10 @@ if st.session_state.faces_detected:
     with col2:
         st.session_state.face2 = st.number_input("Choose Face Number to swap", min_value=0, max_value=st.session_state.num_sfaces-1, value=st.session_state.face2)
 
-    swapper = insightface.model_zoo.get_model("inswapper_128.onnx", download=False)
+    
 
     if st.button("FaceSwap"):
+        swapper = insightface.model_zoo.get_model("inswapper_128.onnx", download=False)
         face1final = int(st.session_state.face1)
         face2final = int(st.session_state.face2)
         photofinal = swapper.get(SourceTemp, st.session_state.faces[face1final], st.session_state.sfaces[face2final], paste_back=True)
