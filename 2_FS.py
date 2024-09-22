@@ -56,6 +56,8 @@ if SourcePhoto is not None and YourPhoto is not None:
         bbox = face["bbox"]
         bbox = [int(b) for b in bbox]
 
+        cv2.rectangle(img, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2)
+
         # Plot the face
         if num_faces == 1:
             axs.imshow(img[bbox[1]:bbox[3], bbox[0]:bbox[2], ::-1])
@@ -66,7 +68,7 @@ if SourcePhoto is not None and YourPhoto is not None:
             axs[i].axis("off")
             axs[i].text(0.5, -0.1, labels[i], size=12, ha="center", transform=axs[i].transAxes)  # Add label
 
-    plt.show()
+    st.pyplot(fig)
 
     #For Second Photo
     simg = cv2.imread("/content/facefront.jpg")
@@ -83,6 +85,8 @@ if SourcePhoto is not None and YourPhoto is not None:
         bbox = face["bbox"]
         bbox = [int(b) for b in bbox]
 
+        cv2.rectangle(simg, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2)
+
         # Crop and display the detected face
         if num_sfaces == 1:
             axs.imshow(simg[bbox[1]:bbox[3], bbox[0]:bbox[2], ::-1])
@@ -93,8 +97,7 @@ if SourcePhoto is not None and YourPhoto is not None:
             axs[i].axis("off")
             axs[i].text(0.5, -0.1, labels[i], size=12, ha="center", transform=axs[i].transAxes)  # Add label
 
-    plt.show()
-
+    st.pyplot(fig)    
     #Ask Your to Choose the Photo
 
 
