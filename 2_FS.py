@@ -112,12 +112,13 @@ if SourcePhoto is not None and YourPhoto is not None:
     #Ask Your to Choose the Photo
     st.markdown("---")
     user_input = st.text_input("Type your string here:")
-    if user_input:
-       face1, face2 = user_input.split(",")  
-    
+        
     SwapBtn = st.button("FaceSwap")
 
     if SwapBtn:
+      if user_input:
+         face1, face2 = user_input.split(",")
+
       swapper = insightface.model_zoo.get_model("inswapper_128.onnx",
                                           download=False,
                                           download_zip=False)
