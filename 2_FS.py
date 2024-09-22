@@ -116,6 +116,7 @@ if SourcePhoto is not None and YourPhoto is not None:
     SwapBtn = st.button("FaceSwap")
 
     if SwapBtn:
+      print("Here we go !!!")
       if user_input:
         face1, face2 = user_input.split(",")
 
