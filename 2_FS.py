@@ -53,7 +53,7 @@ if SourcePhoto is not None and YourPhoto is not None:
 
     with col1:
       #For First Photo
-      img = cv2.imread(SourceTemp)
+      img = cv2.imread(SourcePhoto)
       faces = app.get(img)
       num_faces = len(faces)
       print(num_faces)
@@ -82,7 +82,7 @@ if SourcePhoto is not None and YourPhoto is not None:
 
     with col2:
       #For Second Photo
-      simg = cv2.imread(YourTemp)
+      simg = cv2.imread(YourPhoto)
       sfaces = app.get(simg)
       num_sfaces = len(sfaces)
 
