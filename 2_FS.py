@@ -117,14 +117,16 @@ if SourcePhoto is not None and YourPhoto is not None:
 
     if SwapBtn:
       if user_input:
-         face1, face2 = user_input.split(",")
+        face1, face2 = user_input.split(",")
 
       swapper = insightface.model_zoo.get_model("inswapper_128.onnx",
                                           download=False,
                                           download_zip=False)
       print("Face Swapper Model Loaded...")
       face1final = int(face1)
+      face1final = face1final - 1
       face2final = int(face2)
+      face2final = face2final - 1
       photofinal = SourceTemp.copy()
       photofinal = swapper.get(photofinal,faces[face1final],sfaces[face2final], paste_back=True)
       photofinal = photofinal[:,:,::-1]
