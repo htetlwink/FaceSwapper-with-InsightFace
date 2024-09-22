@@ -112,7 +112,8 @@ if SourcePhoto is not None and YourPhoto is not None:
     #Ask Your to Choose the Photo
     st.markdown("---")
     user_input = st.text_input("Type your string here:")
-    face1, face2 = user_input.split(",")  
+    if user_input:
+       face1, face2 = user_input.split(",")  
     
     SwapBtn = st.button("FaceSwap")
 
